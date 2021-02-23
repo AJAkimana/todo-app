@@ -7,6 +7,11 @@ export class Validator extends ValidatorKeys {
 		this.data = data;
 	}
 
+	/**
+	 *
+	 * @param {String} type input handler
+	 * @param {String} action Request method
+	 */
 	validateInput(type, action) {
 		let validationKeys = null;
 		switch (type) {
@@ -22,6 +27,10 @@ export class Validator extends ValidatorKeys {
 		const schema = Joi.object(validationKeys);
 		return schema.validate(this.data);
 	}
+	/**
+	 *
+	 * @param {Object} error Generated error from Joi validation
+	 */
 	getErrorMessage(error) {
 		const errors = [];
 		const errorsSent = error.details;

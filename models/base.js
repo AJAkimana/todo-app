@@ -1,5 +1,9 @@
 import { v4 as uuidV4 } from 'uuid';
 import { writeJSONFile } from '../helpers';
+
+/**
+ * Class base model with all methods
+ */
 export class BaseModel {
 	/**
 	 *

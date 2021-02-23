@@ -1,5 +1,8 @@
 import Joi from 'joi';
 
+/**
+ * User input attributes
+ */
 export class ValidatorKeys {
 	getTodoAttibutes() {
 		return {
