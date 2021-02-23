@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
 	createATodo,
 	deleteTodo,
+	downloadCsvTodos,
 	getTodoDetails,
 	getTodos,
 	updateTodo
@@ -40,5 +41,6 @@ todoRoutes.delete(
 	catchErrors(doesTodoExits),
 	catchErrors(deleteTodo)
 );
+todoRoutes.get('/download/all', catchErrors(downloadCsvTodos));
 
 export default todoRoutes;

@@ -1,5 +1,7 @@
+import { Parser } from 'json2csv';
 import { Todo } from '../models';
 import { serverResponse } from '../helpers/utils';
+import { todoFields } from '../helpers';
 
 const todoDb = new Todo();
 /**
@@ -49,4 +51,19 @@ export const deleteTodo = async (req, res) => {
 	const { todoId } = req.params;
 	await todoDb.delete(todoId);
 	return serverResponse(res, 200, 'SUccessfuly deleted');
+};
+/**
+ *
+ * @param {*} req Request data from the client
+ * @param {*} res Response data from server
+ */
+export const downloadCsvTodos = async (req, res) => {
+	const todos = await todoDb.findAll();
+
+	const json2csv = new Parser({ fields: todoFields });
+	const csv = json2csv.parse(todos);
+	res.setHeader('Content-Type', 'text/csv');
+	res.setHeader('Content-Disposition', 'attachment; filename=todos.csv');
+
+	return res.end(csv);
 };
