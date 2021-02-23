@@ -1,13 +1,14 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { writeFileSync } from 'fs';
 
 export const hashPassword = (password) => {
-  const salt = bcrypt.genSaltSync(process.env.PASS_SALT);
-  const hashPass = bcrypt.hashSync(password, salt);
-  return hashPass;
+	const salt = bcrypt.genSaltSync(process.env.PASS_SALT);
+	const hashPass = bcrypt.hashSync(password, salt);
+	return hashPass;
 };
 export const unHashPassword = (password, hashedPass) => {
-  return bcrypt.compareSync(password, hashedPass);
+	return bcrypt.compareSync(password, hashedPass);
 };
 /**
  *
@@ -17,12 +18,19 @@ export const unHashPassword = (password, hashedPass) => {
  * @param {*} data Response data
  */
 export const serverResponse = (res, statusCode, message, data) => {
-  const messageType = statusCode >= 400 ? 'error' : 'message';
-  return res
-    .status(statusCode)
-    .json({ status: statusCode, [messageType]: message, data });
+	const messageType = statusCode >= 400 ? 'error' : 'message';
+	return res
+		.status(statusCode)
+		.json({ status: statusCode, [messageType]: message, data });
 };
 export const generatJWT = (userInfo) => {
-  const token = jwt.sign(userInfo, process.env.SECRET, { expiresIn: '1w' });
-  return token;
+	const token = jwt.sign(userInfo, process.env.SECRET, { expiresIn: '1w' });
+	return token;
+};
+export const writeJSONFile = (filename, content) => {
+	writeFileSync(filename, JSON.stringify(content), 'utf8', (err) => {
+		if (err) {
+			console.log(err);
+		}
+	});
 };

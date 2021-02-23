@@ -5,13 +5,11 @@ export const monitorDevActions = (req, res, next) => {
 		const user = req.isAuthenticated()
 			? `User: ${req.user.username}`
 			: 'UNKNOWN user';
-		console.log(
-			`${user} is using ${req.device.type}, 
+		console.log(`
         Route: ${req.path}, method: ${req.method}, 
         body: ${JSON.stringify(req.body)}, 
         session: ${JSON.stringify(req.session)},
-        IP: ${req.ip} `
-		);
+        IP: ${req.ip} `);
 	}
 	return next();
 };

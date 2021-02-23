@@ -1,39 +1,50 @@
+import { v4 as uuidV4 } from 'uuid';
+import { writeJSONFile } from '../helpers';
 export class BaseModel {
 	/**
 	 *
 	 * @param {Array<{id:String, createdAt: Date,modifiedDate: Date}>} model
+	 * @param {String} fileDb Data storage file path
 	 */
-	constructor(model) {
+	constructor(model, fileDb) {
 		this.model = model;
+		this.fileDb = fileDb;
 	}
 	/**
 	 *
 	 * @param {Object} data
 	 */
 	create(data = {}) {
-		const newRecord = {
-			...data,
-			createDate: new Date(),
-			modifiedDate: new Date()
-		};
-		this.model.push(newRecord);
-		return newRecord;
+		return new Promise((resolve, reject) => {
+			const id = { id: uuidV4() };
+			const date = {
+				createDate: new Date(),
+				modifiedDate: new Date()
+			};
+			const newRecord = { ...id, ...data, ...date };
+			this.model.push(newRecord);
+			writeJSONFile(this.fileDb, this.model);
+			resolve(newRecord);
+		});
 	}
 	/**
 	 *
 	 * @param {Object} whereConditions
 	 */
 	findAll(whereConditions) {
-		const records = this.model.filter((r) => r.id === whereConditions);
-		return records;
+		return new Promise((resolve, reject) => {
+			resolve(this.model);
+		});
 	}
 	/**
 	 *
-	 * @param {Object} whereConditions
+	 * @param {Object} id
 	 */
-	findOne(whereConditions) {
-		const record = this.model.find((r) => r.id === whereConditions);
-		return record;
+	findById(id = '') {
+		return new Promise((resolve, reject) => {
+			const record = this.model.find((r) => r.id === id);
+			resolve(record);
+		});
 	}
 	/**
 	 *
@@ -41,21 +52,25 @@ export class BaseModel {
 	 * @param {String} recordId
 	 */
 	update(data, recordId) {
-		const recordIndex = this.model.findIndex((r) => r.id === recordId);
-		for (const key in data) {
-			this.model[recordIndex][key] = data[key];
-		}
-		this.model[recordIndex]['modifiedDate'] = new Date();
-
-		return this.model[recordIndex];
+		return new Promise((resolve, reject) => {
+			const recordIndex = this.model.findIndex((r) => r.id === recordId);
+			for (const key in data) {
+				this.model[recordIndex][key] = data[key];
+			}
+			this.model[recordIndex]['modifiedDate'] = new Date();
+			writeJSONFile(this.fileDb, this.model);
+			resolve(this.model[recordIndex]);
+		});
 	}
 	/**
 	 *
 	 * @param {String} recordId
 	 */
 	delete(recordId) {
-		const recordIndex = this.model.findIndex((r) => r.id === recordId);
-		this.model.shift(recordIndex);
-		return true;
+		return new Promise((resolve, reject) => {
+			const records = this.model.filter((r) => r.id !== recordId);
+			writeJSONFile(this.fileDb, records);
+			resolve();
+		});
 	}
 }

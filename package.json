@@ -42,7 +42,8 @@
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "eslint": "^7.7.0"
