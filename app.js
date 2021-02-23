@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import cors from 'cors';
-import { localPassport, session, security } from './config';
+import { localPassport, session } from './config';
 import { handleErrors } from './middlewares/app';
 import routes from './routes';
 
@@ -18,7 +18,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(session());
 
-security(app);
 /**
  * Initialize passport and session
  */

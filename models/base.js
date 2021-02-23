@@ -38,11 +38,12 @@ export class BaseModel {
 	}
 	/**
 	 *
-	 * @param {Object} id
+	 * @param {String} key
+	 * @param {String} value
 	 */
-	findById(id = '') {
+	findOne(key = '', value = '') {
 		return new Promise((resolve, reject) => {
-			const record = this.model.find((r) => r.id === id);
+			const record = this.model.find((r) => r[key] === value);
 			resolve(record);
 		});
 	}

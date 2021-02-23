@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import todoRoutes from './todoRoutes';
-import userRoutes from './user';
+import userRoutes from './userRoutes';
 
 const apiRoutes = Router();
 
-apiRoutes.use('/users', userRoutes);
+apiRoutes.use('/auth', userRoutes);
 apiRoutes.use('/todos', todoRoutes);
 
 export default apiRoutes;

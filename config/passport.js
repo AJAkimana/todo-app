@@ -1,17 +1,21 @@
 import passportLocal from 'passport-local';
 import { User } from '../models';
-import { unHashPassword, hashPassword, allowedLevels } from '../helpers';
+import { unHashPassword, hashPassword } from '../helpers';
 
 const LocalStrategy = passportLocal.Strategy;
 
 const userDb = new User();
+/**
+ *
+ * @param {Object} passport Passport package
+ */
 export const localPassport = (passport) => {
 	passport.serializeUser((user, done) => {
 		done(null, user.id);
 	});
 
 	passport.deserializeUser((id, done) => {
-		user = userDb.findOne({ id });
+		const user = userDb.findOne('id', id);
 		done(null, user);
 	});
 	//____________________Local login_________________//
@@ -25,18 +29,12 @@ export const localPassport = (passport) => {
 			},
 			(req, username, password, done) => {
 				username = username.toLowerCase().trim();
-				const email = req.body.email ? req.body.email.toLowerCase().trim() : '';
-				User.findOne({
-					where: { [Op.or]: [{ username }] },
-					logging: false
-				})
+				userDb
+					.findOne('username', username)
 					.then((user) => {
 						if (!user) return done({ message: 'Invalid user info' });
 						if (!unHashPassword(password, user.password))
 							return done({ message: 'Invalid password' });
-						user = user.toJSON();
-						if (user.a_level > 2)
-							return done({ message: 'You are not allowed to log in' });
 						return done(null, user);
 					})
 					.catch((error) => done(error));
@@ -55,37 +53,25 @@ export const localPassport = (passport) => {
 				passReqToCallback: true
 			},
 			(req, username, password, done) => {
-				let { email, names, phone, gender, accessLevel } = req.body;
+				let { names } = req.body;
 
-				email = email ? email.toLowerCase().trim() : '';
 				password = hashPassword(password);
 				username = username.toLowerCase().trim();
 				names = names.trim();
-				phone = phone.trim();
-				accessLevel = Number(accessLevel);
 
-				if (!allowedLevels.includes(accessLevel)) {
-					return done({ message: 'You are not allowed to create account' });
-				}
-
-				const userNamePhoneParams = [{ username }, { phone }];
-				const withEmailParams = [...userNamePhoneParams, { email }];
-				const params = email ? withEmailParams : userNamePhoneParams;
-				User.findOne({
-					where: { [Op.or]: params },
-					logging: false
-				})
-					.then((user) => {
-						if (user) {
+				userDb
+					.findOne('username', username)
+					.then((userExist) => {
+						if (userExist) {
 							return done({
-								message: 'Phone number, email or username has taken'
+								message: 'Username has taken'
 							});
 						}
-						User.create(
-							{ email, phone, username, password, names, accessLevel, gender },
-							{ logging: false }
-						)
-							.then((user) => done(null, user))
+						userDb
+							.create({ names, username, password })
+							.then((newUser) => {
+								done(null, newUser);
+							})
 							.catch((error) => done(error));
 					})
 					.catch((error) => done(error));

@@ -12,7 +12,7 @@ export const getTodos = async (req, res) => {
 };
 export const getTodoDetails = async (req, res) => {
 	const { todoId } = req.params;
-	const todo = await todoDb.findById(todoId);
+	const todo = await todoDb.findOne('id', todoId);
 	return serverResponse(res, 200, 'Success', todo);
 };
 export const updateTodo = async (req, res) => {

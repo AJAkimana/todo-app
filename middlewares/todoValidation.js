@@ -12,7 +12,7 @@ export const isTodoInfoValid = (req, res, next) => {
 };
 export const doesTodoExits = async (req, res, next) => {
 	const { todoId } = req.params;
-	const todoExist = await todoDb.findById(todoId);
+	const todoExist = await todoDb.findOne('id', todoId);
 	if (todoExist) return next();
 
 	return serverResponse(res, 404, 'Sorry, the record does not exit');
