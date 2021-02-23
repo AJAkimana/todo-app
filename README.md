@@ -1,14 +1,13 @@
-# Node/Express boilerplate - APIs
+# ToDo APP - APIs
 
-Relax and code <>=> Easy.
+Awesomity Backend Challenge.
 
 ## Technologies
 
 - Runtime environment: [Node](https://nodejs.org/)
 - Backend framework: [Express.js](https://expressjs.com/)
 - Authentication: [Passport.js, ](https://expressjs.com/) | [JWT](https://jwt.io/)
-- Database(tested): mysql | mariadb | postgres
-- ORM: [Sequelize.js](https://sequelize.org/)
+- Storage(No): Data structure
 
 ## Installation
 
@@ -16,11 +15,11 @@ Before installing, [download and install Node.js](https://nodejs.org/en/download
 
 ## Quick Start
 
-The quickest way to setup the boilerplate is as shown below:
+The quickest way to setup the app is as shown below:
 
 ```
-git clone git@github.com:AJAkimana/express-app-boilerplate.git
-cd express-app-boilerplate
+git clone git://github.com/AJAkimana/todo-app.git
+cd todo-app
 ```
 
 Install dependencies:
