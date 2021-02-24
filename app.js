@@ -3,9 +3,11 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
 import { localPassport, session } from './config';
 import { handleErrors } from './middlewares/app';
 import routes from './routes';
+import * as swaggerDocument from './swagger.json';
 
 dotenv.config();
 localPassport(passport);
@@ -26,6 +28,11 @@ app.use(passport.session());
 /**
  * App routes
  */
+app.use(
+	'/api/documentation',
+	swaggerUi.serve,
+	swaggerUi.setup(swaggerDocument)
+);
 app.use(routes);
 /**
  * Catch unexpected errors
