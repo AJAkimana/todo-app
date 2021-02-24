@@ -33,7 +33,7 @@ export const signupUser = (req, res, next) => {
 		if (error) return serverResponse(res, 401, error.message);
 		const successMsg = `Thank you, ${user.names}, for registering`;
 		delete user.password;
-		return serverResponse(res, 200, successMsg, user);
+		return serverResponse(res, 201, successMsg, user);
 	})(req, res, next);
 };
 /**
