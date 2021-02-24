@@ -1,0 +1,172 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Awesomity Backend Challenge - TODO APIs",
+    "version": "1.0.0",
+    "title": "Awesomity Backend Challenge",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Users Authentication"
+    },
+    {
+      "name": "todos",
+      "description": "Todos Operations"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Authenticate a user",
+        "description": "Authenticate a user and send a token",
+        "operationId": "Login",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Credentials to be sent to authenticate a user",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["username", "password"],
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "usertest"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Abcd1234!"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully authenticated"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Create a user",
+        "description": "Create a user and send back the user created data",
+        "operationId": "Signup",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Information to be sent to create a user",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["username", "password", "names"],
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "usertest"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "Abcd1234!"
+                },
+                "names": {
+                  "type": "string",
+                  "example": "User Abcd"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Authentication error"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/todos": {
+      "post": {
+        "tags": ["todos"],
+        "summary": "Create a todo",
+        "description": "Create a todo and send back the todo created data",
+        "operationId": "Create",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Information to be sent to create a user",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["title", "description", "priority"],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "usertest"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Abcd1234!"
+                },
+                "priority": {
+                  "type": "string",
+                  "example": "LOW"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Not authorised"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  }
+}
