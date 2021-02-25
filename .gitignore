@@ -103,9 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-# Remove package lock
-package-lock.json
-
 # 
 coverage
 build/
