@@ -1,12 +1,12 @@
 language: node_js
+services:
+  - redis-server
 env:
   global:
     - CC_TEST_REPORTER_ID=3990e45e13aa59a8df06502c9932f6e91f28f36473d26598da7ca75c1d68f907
 matrix:
   include:
     - node_js: '12'
-  services:
-    - redis-server
 cache:
   directories: [node_modules]
 install: npm install
