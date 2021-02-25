@@ -1,6 +1,10 @@
 # ToDo APP - APIs
 
 Awesomity Backend Challenge.
+[![Build Status](https://travis-ci.com/AJAkimana/todo-app.svg?branch=main)](https://travis-ci.com/AJAkimana/todo-app)
+[![Coverage Status](https://coveralls.io/repos/github/AJAkimana/todo-app/badge.svg)](https://coveralls.io/github/AJAkimana/todo-app)
+[![Maintainability](https://api.codeclimate.com/v1/badges/78af8665e1c1e60356c1/maintainability)](https://codeclimate.com/github/AJAkimana/todo-app/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/78af8665e1c1e60356c1/test_coverage)](https://codeclimate.com/github/AJAkimana/todo-app/test_coverage)
 
 ## Technologies
 
